@@ -1,0 +1,23 @@
+<ul id="dropdown_1" class="dropdown-content">
+	<li><a href="/">Profile</a></li>
+	<li><a href="/">Setting</a></li>
+	<li class="divider"></li>
+	<li><a href="{%url 'signout'%}">Logout</a></li>
+</ul>
+<ul id="dropdown_category" class="dropdown-content">
+	{%for d in category%}
+	<li><a href="/">{{d.name}}</a></li>
+	{%endfor%}
+</ul>
+<div class="navbar-fixed">
+	<nav class="teal accent-4">
+		<div class="nav-wrapper">
+			<a href="/" class="brand-logo">Blog Django</a>
+			<ul class="right hide-on-med-and-down">
+				<li><a href="/">Home</a></li>
+				<li><a class="dropdown-trigger" href="/" data-target="dropdown_category">Category<i class="material-icons right">arrow_drop_down</i></a></li>
+				<li><a class="dropdown-trigger" href="/" data-target="dropdown_1">{{user.username}}<i class="material-icons right">arrow_drop_down</i></a></li>
+			</ul>
+		</div>
+	</nav>
+</div>

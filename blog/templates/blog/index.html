@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title></title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@materializecss/materialize@1.1.0-alpha/dist/css/materialize.min.css">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdn.jsdelivr.net/npm/@materializecss/materialize@1.1.0-alpha/dist/js/materialize.min.js"></script>
+		<link rel="stylesheet" href="{% static 'css/app.css'%}">
+	</head>
+	<body>
+		{%include "./navbar.html"%}
+		<div class="container">
+			<div class="row">
+				{%for d in blog%}
+				<div class="col s12 m3">
+					<div class="card">
+						<div class="card-image waves-effect waves-block waves-light">
+							<img class="activator" src="{{d.thumbnail.url}}">
+						</div>
+						<div class="card-content">
+							<span class="card-title activator grey-text text-darken-4">{{ d.name }}<i class="material-icons right">more_vert</i></span>
+							<p><a href="{% url 'show-blog' d.id%}">View</a></p>
+						</div>
+						<div class="card-reveal">
+							<span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i>Description</span>
+							<p>{{d.description}}</p>
+						</div>
+					</div>
+				</div>
+				{%endfor%}
+			</div>
+		</div>
+		<script>
+			$(document).ready(function(){
+				$('.dropdown-trigger').dropdown({});
+			});
+		</script>
+	</body>
+</html>

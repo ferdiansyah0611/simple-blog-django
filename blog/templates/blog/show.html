@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title></title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@materializecss/materialize@1.1.0-alpha/dist/css/materialize.min.css">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdn.jsdelivr.net/npm/@materializecss/materialize@1.1.0-alpha/dist/js/materialize.min.js"></script>
+		<link rel="stylesheet" href="{% static 'css/app.css'%}">
+	</head>
+	<body>
+		{%include './navbar.html'%}
+		<div class="container">
+			<div class="card">
+				<div class="card-image waves-effect waves-block waves-light">
+				</div>
+				<div class="card-tabs">
+					<ul class="tabs tabs-fixed-width">
+						<li class="tab"><a class="active" href="#test1">Content</a></li>
+						<li class="tab"><a href="#test2">Comment</a></li>
+						<li class="tab"><a href="#test3">About User</a></li>
+					</ul>
+				</div>
+				<div class="card-content grey lighten-4">
+					<div id="test1">
+						<p>{{blog.created}}</p>
+						<img class="responsive-img" src="{{blog.thumbnail.url}}">
+						<p>{{blog.description}}</p>
+					</div>
+					<div id="test2">
+						<div class="input-field col s6">
+							<input placeholder="Placeholder" id="first_name" type="text" class="validate">
+							<label for="first_name">Type Here</label>
+						</div>
+					</div>
+					<div id="test3">
+						{{blog.user.username}}
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			$(document).ready(function(){
+				$('.dropdown-trigger').dropdown({});
+				$('.tabs').tabs({
+					swipeable: false
+				})
+			});
+		</script>
+	</body>
+</html>
