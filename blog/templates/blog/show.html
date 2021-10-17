@@ -2,53 +2,59 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title></title>
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@materializecss/materialize@1.1.0-alpha/dist/css/materialize.min.css">
-		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-		<script src="https://cdn.jsdelivr.net/npm/@materializecss/materialize@1.1.0-alpha/dist/js/materialize.min.js"></script>
-		<link rel="stylesheet" href="{% static 'css/app.css'%}">
+		{%include "./head.html"%}
 	</head>
 	<body>
 		{%include './navbar.html'%}
-		<div class="container">
-			<div class="card">
-				<div class="card-image waves-effect waves-block waves-light">
-				</div>
-				<div class="card-tabs">
-					<ul class="tabs tabs-fixed-width">
-						<li class="tab"><a class="active" href="#test1">Content</a></li>
-						<li class="tab"><a href="#test2">Comment</a></li>
-						<li class="tab"><a href="#test3">About User</a></li>
-					</ul>
-				</div>
-				<div class="card-content grey lighten-4">
-					<div id="test1">
-						<p>{{blog.created}}</p>
-						<img class="responsive-img" src="{{blog.thumbnail.url}}">
-						<p>{{blog.description}}</p>
-					</div>
-					<div id="test2">
-						<div class="input-field col s6">
-							<input placeholder="Placeholder" id="first_name" type="text" class="validate">
-							<label for="first_name">Type Here</label>
+		<div class="sm:p-4 mt-16 pt-3">
+			<div class="tabs tabs-boxed rounded-none">
+				<a data-target="#content" class="tab flex-1 tab-lg tab-active">Content</a>
+				<a data-target="#comment" class="tab flex-1 tab-lg">Comment</a>
+				<a data-target="#about" class="tab flex-1 tab-lg">About User</a>
+			</div>
+			<div class="bg-neutral">
+				
+			<div class="tabs-body p-4" id="content">
+				<p>{{blog.created}}</p>
+				<img class="responsive-img" src="{{blog.thumbnail.url}}">
+				<p>{{blog.description}}</p>
+			</div>
+			<div class="tabs-body p-4 hidden" id="comment">
+				<div class="input-field col s6">
+					<form method="post" action="{%url 'addcomment' blog.id%}">
+						{% csrf_token %}
+						<div class="form-control">
+						  <textarea name="comment" class="textarea h-24 textarea-bordered textarea-primary" placeholder="Required *"></textarea>
 						</div>
-					</div>
-					<div id="test3">
-						{{blog.user.username}}
-					</div>
+						<button class="btn btn-primary my-2">Submit</button>
+					</form>
 				</div>
+				<ul class="menu py-3 shadow-lg bg-base-100 rounded-box">
+					{%for d in comment%}
+					<li class="menu-title p-2">
+							<p>{{d.user.username}}, {{d.created}}</p>
+							<p>{{d.comment}}</p>
+					</li>
+					{%endfor%}
+				</ul>
+			</div>
+			<div class="tabs-body p-4 hidden" id="about">
+				{{blog.user.username}}
+			</div>
 			</div>
 		</div>
 		<script>
 			$(document).ready(function(){
-				$('.dropdown-trigger').dropdown({});
-				$('.tabs').tabs({
-					swipeable: false
-				})
+				function tabs(){
+					let tab = $('.tab'), tabs = $('.tabs-body')
+					tab.on('click', e => {
+						$('.tab-active').removeClass('tab-active')
+						e.target.classList.add('tab-active')
+						tabs.addClass('hidden')
+						$(e.target.dataset.target).removeClass('hidden')
+					})
+				}
+				tabs()
 			});
 		</script>
 	</body>
